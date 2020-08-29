@@ -10,7 +10,6 @@ http
             });
         } else if ((method == "GET" || method == "POST") && url == "/users") {
             cros(res);
-            console.log('hello world')
             res.end(JSON.stringify([{
                 name: "tom",
                 age: 20
@@ -26,4 +25,7 @@ function cros(res) {
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Origin", 'http://127.0.0.1:8080');
     res.setHeader("Access-Control-Allow-Headers", 'X-Token,Content-Type');
+
+    res.setHeader("Set-Cookie","cookieval=val2222;")
+    res.setHeader("Access-Control-Allow-Credentials", 'true');
 }
