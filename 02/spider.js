@@ -2,13 +2,31 @@ const originRequest = require("request");
 const cheerio = require("cheerio");
 const iconv = require("iconv-lite");
 
-originRequest('https://www.dy2018.com/i/102349.html', function (error, response, body) {
+for(let i=100553;i<100573;i++){
+  originRequest(
+    `https://www.dy2018.com/i/${i}.html`, 
+    {
+      url: `https://www.dy2018.com/i/${i}.html`, 
+      encoding: null
+    },
+    function (error, response, body) {
+      body = iconv.decode(body, 'gb2312');
+      const $ = cheerio.load(body)
+      console.log('标题:', $('.title_all h1').text()); // Print the HTML for the Google homepage.
+    });
+  
+}
 
 
-  str = iconv.decode(body, 'gb2312');
-  console.error('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', str); // Print the HTML for the Google homepage.
 
 
-});
+
+
+
+
+
+
+
+
+
+
