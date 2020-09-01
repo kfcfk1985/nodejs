@@ -8,10 +8,19 @@
 
 <body>
     <div id="app">
-        <input v-model="message">
-        <button v-on:click="send">发送</button>
-        <button v-on:click="clear">清空</button>
-        <div v-for="item in list">{{item}}</div>
+        <div>
+            <input type="input" v-model="message">
+        </div>
+
+        <div>
+            <button @click="send">发送</button>
+            <button @click="clean">清除</button>
+        </div>
+
+        <div>
+            <p>历史缓存</p>
+            <p v-for="item in list">{{item}}</p>
+        </div>
     </div>
 
     <script>
@@ -19,26 +28,35 @@
         var app = new Vue({
             el: '#app',
             data: {
+                message: 'please input message',
                 list: [],
-                message: 'Hello Vue!'
             },
             methods: {
-                send: async function () {
-                    let res = await axios.post(host + '/send', {
+                async send() {
+                    // console.log('send')
+
+                    let ret = await axios.post(`${host}/send`, {
                         message: this.message
                     })
-                    this.list = res.data
+                    // console.log('send 返回的结果:', ret)
+
+                    this.list = ret.data;
                 },
-                clear: async function () {
-                    let res = await axios.post(host + '/clear')
-                    this.list = res.data
+                async clean() {
+                    // console.log('clean')
+                    let ret = await axios.post(`${host}/clear`)
+                    this.list = ret.data;
                 }
             },
-            mounted: function () {
-                setInterval(async () => {
-                    const res = await axios.get(host + '/list')
-                    this.list = res.data
-                }, 1000);
+            mounted() {
+                // console.log('hello world')
+
+                setInterval(() => {
+                    axios.get(`${host}/list`).then((ret) => {
+                        // console.log('list 返回的结果:', ret)
+                        this.list = ret.data;
+                    })
+                },1000)
             }
         });
     </script>
