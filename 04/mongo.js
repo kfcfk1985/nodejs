@@ -1,35 +1,42 @@
+
 (async () => {
-    let dbs = {}; 
+  const { MongoClient: MongoDB } = require('mongodb')
 
-    /*引入mongoDB*/
-    const MongoClient = require("mongodb").MongoClient;
+  // 创建客户端
+  const client = new MongoDB(
+    'mongodb://localhost:27017',
+    {
+      userNewUrlParser: true
+    }
+  )
+  let ret
+  // 创建连接
+  ret = await client.connect()
+  console.log('ret:', ret)
+  const db = client.db('test')
+  const fruits = db.collection('fruits')
 
-    /*实例化一个客户端 */
-    let client = new MongoClient(
-        "mongodb://localhost:27017", {
-            useNewUrlParser: true
-        }
+  // 添加文档
+  ret = await fruits.insertOne({
+    name: '芒果',
+    price: 20.1
+  })
+  console.log('插入成功', JSON.stringify(ret))
 
-    )
+  // 查询文档
+  ret = await fruits.findOne()
+  console.log('查询文档:', ret)
 
-    /**建立连接 */
-    let ret = await client.connect();
-    //  console.log("---->ret",JSON.stringify(ret,null,2))
-    //  console.log("---->ret",(ret))
+  // 更新文档
+  ret = await fruits.updateOne({ name: '芒果' }, 
+  { $set: { name: '苹果' } })
+  console.log('更新文档', JSON.stringify(ret.result))
 
-    /* 创建 example 数据库*/    
-    dbs.exaplme = await client.db("eaxmple");
+  // 删除文档
+  ret = await fruits.deleteOne({name: '苹果'})
 
-    /* 在 example 下创建 furits 表*/    
-    dbs.exaplme.furits = await dbs.exaplme.collection('furits')
+  await fruits.deleteMany()
 
-    /* 在 furits 表插入一条数据*/    
-    ret = dbs.exaplme.furits.insertOne({
-        name: '芒果',
-        price: '10'
-    })
-
-    /*更新数据*/
-    ret = await dbs.exaplme.furits.updateOne({ name: "芒果" }, { $set: { price: 19.8 } });
+  client.close()
 
 })()
