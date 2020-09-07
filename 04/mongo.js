@@ -1,42 +1,44 @@
-
 (async () => {
-  const { MongoClient: MongoDB } = require('mongodb')
+    const {MongoClient: MongoDB} = require('mongodb')
 
-  // 创建客户端
-  const client = new MongoDB(
-    'mongodb://localhost:27017',
-    {
-      userNewUrlParser: true
-    }
-  )
-  let ret
-  // 创建连接
-  ret = await client.connect()
-  console.log('ret:', ret)
-  const db = client.db('test')
-  const fruits = db.collection('fruits')
+    
+    const client = new MongoDB(                 // 创建客户端
+        'mongodb://localhost:27017', {
+            userNewUrlParser: true
+        }
+    )
 
-  // 添加文档
-  ret = await fruits.insertOne({
-    name: '芒果',
-    price: 20.1
-  })
-  console.log('插入成功', JSON.stringify(ret))
+    let ret;
+    ret = await client.connect()                // 创建连接
+    console.log('ret:', ret)
 
-  // 查询文档
-  ret = await fruits.findOne()
-  console.log('查询文档:', ret)
+    const db = client.db('test')                //创建 test 数据库
+    const fruits = db.collection('fruits')      //创建 fruits 表
 
-  // 更新文档
-  ret = await fruits.updateOne({ name: '芒果' }, 
-  { $set: { name: '苹果' } })
-  console.log('更新文档', JSON.stringify(ret.result))
+    
+    ret = await fruits.insertOne({              // 插入数据
+        name: '芒果',
+        price: 20.1
+    })
+    // console.log('插入成功', JSON.stringify(ret))
 
-  // 删除文档
-  ret = await fruits.deleteOne({name: '苹果'})
+    
+    ret = await fruits.findOne()                // 查询数据
+    // console.log('查询文档:', ret)
 
-  await fruits.deleteMany()
+    
+    ret = await fruits.updateOne({              // 更新数据
+        name: '芒果'
+    }, {
+        $set: {
+            name: '苹果'
+        }
+    })
+    // console.log('更新文档', JSON.stringify(ret.result))
 
-  client.close()
+    ret = await fruits.deleteOne({              // 输出文档
+        name: '苹果'        
+    })
 
+    client.close()                              //断开连接
 })()
