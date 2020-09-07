@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head> 
+    <meta charset="utf-8"> 
+    <title>菜鸟教程(runoob.com)</title> 
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <style scoped>
+        #myCanvas {
+            border: 1px solid red;
+            /* width: 200px; */
+            /* height: 200px; */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- 注意，width 和 height 一定要在canvas标签中，否则画的图会有一些问题 -->
+        <canvas id="myCanvas" width="500" height="500">
+            您的浏览器不支持 HTML5 canvas 标签。
+        </canvas>
+
+        <button @click=onClick>点击</button>
+    </div>
+
+    <script>
+        // 创建一个新的 Vue 实例
+        var demo = new Vue({
+            el: '#app', // DOM 元素，挂载视图模型
+            data: {
+                cnt: 0, // 定义属性，并设置初始值
+            },
+            methods: { // 点击菜单使用的函数
+                draw(step) {
+                    var c = document.getElementById("myCanvas");
+                    var ctx = c.getContext("2d");
+
+                    ctx.beginPath();
+                    switch (step) {
+                        case 0:
+                            ctx.moveTo(50, 125);
+                            ctx.lineTo(150, 375);
+                            break;
+                        case 1:
+                            ctx.moveTo(150, 375);
+                            ctx.lineTo(250, 125);
+                            break;
+                        case 2:
+                            ctx.moveTo(250, 125);
+                            ctx.lineTo(350, 375);
+                            break;
+                        case 3:
+                            ctx.moveTo(350, 375);
+                            ctx.lineTo(450, 125);
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = "10"
+                    ctx.stroke();
+
+                },
+                onClick(item) {
+                    console.log('this is onClick')
+
+                    this.draw(this.cnt);
+                    this.cnt++;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@ http
         const {method,url} = req;
         if (method == "GET" && url == "/") {
             fs.readFile("./index.html", (err, data) => {
-                res.setHeader("Content-Type", "text/html");
+                res.setHeader("Content-Type", "text/html;charset=UTF-8");
                 res.end(data);
             });
         } else if ((method == "GET" || method == "POST") && url == "/users") {
