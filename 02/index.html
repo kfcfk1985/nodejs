@@ -27,12 +27,23 @@
 </head>
 
 <body>
-    <div id="app" >
+    <div id="app" @touchstart="onTouchstart"
+                  @touchmove="onTouchmove"
+                  @touchend="onTouchend" >
         <!-- 注意，width 和 height 一定要在canvas标签中，否则画的图会有一些问题 -->
-        <canvas id="myCanvas" :style="myCanvasStyle">
+        <!-- <canvas id="myCanvas" :style="myCanvasStyle">
+            您的浏览器不支持 HTML5 canvas 标签。
+        </canvas> -->
+
+
+        <!-- <canvas id="myCanvas" :style="{width:myCanvasStyle.width,height:myCanvasStyle.height}">
+            您的浏览器不支持 HTML5 canvas 标签。
+        </canvas> -->
+
+
+        <canvas id="myCanvas" width="375px" height="617px">
             您的浏览器不支持 HTML5 canvas 标签。
         </canvas>
-
 
 
         <p>
@@ -48,6 +59,11 @@
             data: {
                 cnt: 0, // 定义属性，并设置初始值
                 myCanvasStyle:{},
+                lastPosX:0,
+                lastPosY:0,
+                currentX:0,
+                currentY:0,
+                ctx:null,
              
             },
             methods: { // 点击菜单使用的函数
@@ -87,14 +103,58 @@
                 onStart(item) {
                     console.log('this is onStart')
 
-                    // this.draw(this.cnt);
-                    // this.cnt++;
+                    this.draw(this.cnt);
+                    this.cnt++;
                 },
                 onClean(item) {
                     console.log('this is onClean')
 
                     // this.draw(this.cnt);
                     // this.cnt++;
+                },
+                onTouchstart(e){
+                    // console.log('this is onTouchstart',event.targetTouches[0])
+                    this.lastPosX = Number(parseInt(e.targetTouches[0].clientX));
+                    this.lastPosY = Number(parseInt(e.targetTouches[0].clientY));
+
+                    // alert(`${this.lastPosX} : ${this.lastPosY}`)
+                    console.log(`${this.lastPosX} : ${this.lastPosY}`)
+                    
+                    var c = document.getElementById("myCanvas");
+                    this.ctx = c.getContext("2d");
+                    // this.ctx.beginPath();
+                    // this.ctx.moveTo(this.lastPosX, this.lastPosY);
+                    // this.ctx.lineTo(this.lastPosX+5, this.lastPosY+5);
+
+                    // this.ctx.strokeStyle = "red";
+                    // this.ctx.lineWidth = "10"
+                    // this.ctx.stroke();
+
+                },
+                onTouchmove(e){
+                    // console.log('this is onTouchmove',event.targetTouches[0])
+                    
+
+                    this.currentX = Number(parseInt(e.targetTouches[0].clientX));
+                    this.currentY = Number(parseInt(e.targetTouches[0].clientY));
+                    // console.log(`${this.currentX} : ${this.currentY}`)
+
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.lastPosX, this.lastPosY);
+                    this.ctx.lineTo(this.currentX, this.currentY);
+
+                    this.ctx.strokeStyle = "red";
+                    this.ctx.lineWidth = "5"
+                    this.ctx.stroke();
+
+                    this.lastPosX = this.currentX
+                    this.lastPosY = this.currentY
+                    // this.ctx.lineTo(this.currentX, this.currentY);
+                    // this.ctx.stroke();
+                   
+                },
+                onTouchend(e){
+                    // console.log('this is onTouchend',e)
                 }
             },
             mounted(){
