@@ -1,14 +1,116 @@
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    (async () => {
-        axios.defaults.withCredentials = true;
-        axios.defaults.baseURL = 'http://localhost:3000';
-        const res = await axios.post("/users", {
-            headers: {
-                'X-Token': '123'
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>宝乐canvas</title>
+    <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+    <style scoped>
+        #myCanvas {
+            border: 1px solid red;
+            /* width: 200px; */
+            /* height: 200px; */
+        }
+
+
+        #app{
+            position: fixed;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+            bottom: 0px;
+
+            /* border: 1px solid black; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" >
+        <!-- 注意，width 和 height 一定要在canvas标签中，否则画的图会有一些问题 -->
+        <canvas id="myCanvas" :style="myCanvasStyle">
+            您的浏览器不支持 HTML5 canvas 标签。
+        </canvas>
+
+
+
+        <p>
+            <button @click="onStart">开始</button>
+            <button @click="onClean">清除</button>
+        </p>
+    </div>
+
+    <script>
+        // 创建一个新的 Vue 实例
+        var demo = new Vue({
+            el: '#app', // DOM 元素，挂载视图模型
+            data: {
+                cnt: 0, // 定义属性，并设置初始值
+                myCanvasStyle:{},
+             
+            },
+            methods: { // 点击菜单使用的函数
+
+                draw(step) {
+                    var c = document.getElementById("myCanvas");
+                    var ctx = c.getContext("2d");
+
+                    ctx.beginPath();
+                    switch (step) {
+                        case 0:
+                            ctx.moveTo(50, 125);
+                            ctx.lineTo(150, 375);
+                            break;
+                        case 1:
+                            ctx.moveTo(150, 375);
+                            ctx.lineTo(250, 125);
+                            break;
+                        case 2:
+                            ctx.moveTo(250, 125);
+                            ctx.lineTo(350, 375);
+                            break;
+                        case 3:
+                            ctx.moveTo(350, 375);
+                            ctx.lineTo(450, 125);
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    ctx.strokeStyle = "red";
+                    ctx.lineWidth = "10"
+                    ctx.stroke();
+
+                },
+                onStart(item) {
+                    console.log('this is onStart')
+
+                    // this.draw(this.cnt);
+                    // this.cnt++;
+                },
+                onClean(item) {
+                    console.log('this is onClean')
+
+                    // this.draw(this.cnt);
+                    // this.cnt++;
+                }
+            },
+            mounted(){
+                console.log('mounted')
+
+                let app = document.getElementById("app")
+                let appStyle = window.getComputedStyle(app, null);
+                console.log('appStyle',appStyle.height.slice(0,-2),appStyle.width)
+
+                this.myCanvasStyle = {
+                    width:`${appStyle.width}`,
+                    height:`${appStyle.height.slice(0,-2) - 50}px`
+                }
             }
-        })
-        console.log('data', res.data)
-    })()
-</script>
-Test
+        });
+    </script>
+</body>
+
+</html>
