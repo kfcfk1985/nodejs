@@ -8,7 +8,7 @@
     <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
     <style scoped>
         #myCanvas {
-            border: 1px solid red;
+            border: 1px solid rgb(10, 10, 10);
             /* width: 200px; */
             /* height: 200px; */
         }
@@ -37,7 +37,7 @@
 
 
         <p>
-            <button @click="onStart">开始</button>
+            <button @click="changeColor">更改颜色</button>
             <button @click="onClean">清除</button>
         </p>
     </div>
@@ -48,6 +48,8 @@
             el: '#app', // DOM 元素，挂载视图模型
             data: {
                 cnt: 0, // 定义属性，并设置初始值
+                colorCnt:0,
+                color:'red',
                 lastPosX: 0,
                 lastPosY: 0,
                 currentX: 0,
@@ -132,7 +134,7 @@
                     this.ctx.moveTo(this.lastPosX, this.lastPosY);
                     this.ctx.lineTo(this.currentX, this.currentY);
 
-                    this.ctx.strokeStyle = "red";
+                    this.ctx.strokeStyle = this.color;
                     this.ctx.lineWidth = "5"
                     this.ctx.stroke();
 
@@ -148,6 +150,13 @@
                 setCanvasWidthHeight(width, height) {
                     document.getElementById("myCanvas").width = width;
                     document.getElementById("myCanvas").height = height;
+                },
+                changeColor(){
+                    let colors = ['red','green','blue'];
+                    this.colorCnt ++;
+
+                    this.color = colors[this.colorCnt%3]
+
                 }
             },
             mounted() {
