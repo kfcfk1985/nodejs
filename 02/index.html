@@ -134,7 +134,7 @@
                 onTouchmove(e){
                     // console.log('this is onTouchmove',event.targetTouches[0])
                     
-
+                    e.preventDefault();
                     this.currentX = Number(parseInt(e.targetTouches[0].clientX));
                     this.currentY = Number(parseInt(e.targetTouches[0].clientY));
                     // console.log(`${this.currentX} : ${this.currentY}`)
