@@ -14,7 +14,7 @@
         }
 
 
-        #app{
+        #app {
             position: fixed;
             left: 0px;
             right: 0px;
@@ -27,23 +27,13 @@
 </head>
 
 <body>
-    <div id="app" @touchstart="onTouchstart"
-                  @touchmove="onTouchmove"
-                  @touchend="onTouchend" >
-        <!-- 注意，width 和 height 一定要在canvas标签中，否则画的图会有一些问题 -->
-        <!-- <canvas id="myCanvas" :style="myCanvasStyle">
-            您的浏览器不支持 HTML5 canvas 标签。
-        </canvas> -->
-
-
-        <!-- <canvas id="myCanvas" :style="{width:myCanvasStyle.width,height:myCanvasStyle.height}">
-            您的浏览器不支持 HTML5 canvas 标签。
-        </canvas> -->
-
-
-        <canvas id="myCanvas" width="375px" height="617px">
+    <div id="app" @touchstart="onTouchstart" @touchmove="onTouchmove" @touchend="onTouchend">
+        <!-- 注意，width 和 height 一定要在canvas标签中设置，否则绘制出来的图像会发生变形 -->
+        <!-- https://blog.csdn.net/qq_34973481/article/details/85059679 -->
+        <canvas id="myCanvas">
             您的浏览器不支持 HTML5 canvas 标签。
         </canvas>
+
 
 
         <p>
@@ -58,13 +48,12 @@
             el: '#app', // DOM 元素，挂载视图模型
             data: {
                 cnt: 0, // 定义属性，并设置初始值
-                myCanvasStyle:{},
-                lastPosX:0,
-                lastPosY:0,
-                currentX:0,
-                currentY:0,
-                ctx:null,
-             
+                lastPosX: 0,
+                lastPosY: 0,
+                currentX: 0,
+                currentY: 0,
+                ctx: null,
+
             },
             methods: { // 点击菜单使用的函数
 
@@ -112,14 +101,14 @@
                     // this.draw(this.cnt);
                     // this.cnt++;
                 },
-                onTouchstart(e){
+                onTouchstart(e) {
                     // console.log('this is onTouchstart',event.targetTouches[0])
                     this.lastPosX = Number(parseInt(e.targetTouches[0].clientX));
                     this.lastPosY = Number(parseInt(e.targetTouches[0].clientY));
 
                     // alert(`${this.lastPosX} : ${this.lastPosY}`)
                     console.log(`${this.lastPosX} : ${this.lastPosY}`)
-                    
+
                     var c = document.getElementById("myCanvas");
                     this.ctx = c.getContext("2d");
                     // this.ctx.beginPath();
@@ -131,9 +120,9 @@
                     // this.ctx.stroke();
 
                 },
-                onTouchmove(e){
+                onTouchmove(e) {
                     // console.log('this is onTouchmove',event.targetTouches[0])
-                    
+
                     e.preventDefault();
                     this.currentX = Number(parseInt(e.targetTouches[0].clientX));
                     this.currentY = Number(parseInt(e.targetTouches[0].clientY));
@@ -151,23 +140,27 @@
                     this.lastPosY = this.currentY
                     // this.ctx.lineTo(this.currentX, this.currentY);
                     // this.ctx.stroke();
-                   
+
                 },
-                onTouchend(e){
+                onTouchend(e) {
                     // console.log('this is onTouchend',e)
+                },
+                setCanvasWidthHeight(width, height) {
+                    document.getElementById("myCanvas").width = width;
+                    document.getElementById("myCanvas").height = height;
                 }
             },
-            mounted(){
+            mounted() {
                 console.log('mounted')
 
                 let app = document.getElementById("app")
                 let appStyle = window.getComputedStyle(app, null);
-                console.log('appStyle',appStyle.height.slice(0,-2),appStyle.width)
+                console.log('appStyle', appStyle.height.slice(0, -2), appStyle.width)
 
-                this.myCanvasStyle = {
-                    width:`${appStyle.width}`,
-                    height:`${appStyle.height.slice(0,-2) - 50}px`
-                }
+                this.setCanvasWidthHeight(
+                    Number(appStyle.width.slice(0, -2)) - 2,
+                    Number(appStyle.height.slice(0, -2)) - 50
+                )
             }
         });
     </script>
