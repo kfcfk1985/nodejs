@@ -48,14 +48,20 @@
             el: '#app', // DOM 元素，挂载视图模型
             data: {
                 cnt: 0, // 定义属性，并设置初始值
-                colorCnt:0,
-                color:'red',
+
+                colorCnt: 0,
+                color: 'red',
+                
                 lastPosX: 0,
                 lastPosY: 0,
                 currentX: 0,
                 currentY: 0,
+                
                 ctx: null,
 
+
+                canvasWidth:0,
+                canvasHeight:0, 
             },
             methods: { // 点击菜单使用的函数
 
@@ -99,9 +105,7 @@
                 },
                 onClean(item) {
                     console.log('this is onClean')
-
-                    // this.draw(this.cnt);
-                    // this.cnt++;
+                    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
                 },
                 onTouchstart(e) {
                     // console.log('this is onTouchstart',event.targetTouches[0])
@@ -151,11 +155,11 @@
                     document.getElementById("myCanvas").width = width;
                     document.getElementById("myCanvas").height = height;
                 },
-                changeColor(){
-                    let colors = ['red','green','blue'];
-                    this.colorCnt ++;
+                changeColor() {
+                    let colors = ['red', 'green', 'blue'];
+                    this.colorCnt++;
 
-                    this.color = colors[this.colorCnt%3]
+                    this.color = colors[this.colorCnt % 3]
 
                 }
             },
@@ -166,9 +170,11 @@
                 let appStyle = window.getComputedStyle(app, null);
                 console.log('appStyle', appStyle.height.slice(0, -2), appStyle.width)
 
+                this.canvasWidth = Number(appStyle.width.slice(0, -2)) - 2;
+                this.canvasHeight = Number(appStyle.height.slice(0, -2)) - 50;
                 this.setCanvasWidthHeight(
-                    Number(appStyle.width.slice(0, -2)) - 2,
-                    Number(appStyle.height.slice(0, -2)) - 50
+                    this.canvasWidth,
+                    this.canvasHeight
                 )
             }
         });
