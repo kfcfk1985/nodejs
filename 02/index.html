@@ -23,6 +23,20 @@
 
             /* border: 1px solid black; */
         }
+
+        .btn-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+
+            margin: 0px;
+            height: 50px;
+        }
+
+        .btn {
+            width: 100px;
+        }
     </style>
 </head>
 
@@ -36,9 +50,9 @@
 
 
 
-        <p>
-            <button @click="changeColor">更改颜色</button>
-            <button @click="onClean">清除</button>
+        <p class="btn-container">
+            <button class="btn" @click="changeColor">更改颜色</button>
+            <button class="btn" @click="onClean">清除</button>
         </p>
     </div>
 
@@ -51,17 +65,17 @@
 
                 colorCnt: 0,
                 color: 'red',
-                
+
                 lastPosX: 0,
                 lastPosY: 0,
                 currentX: 0,
                 currentY: 0,
-                
+
                 ctx: null,
 
 
-                canvasWidth:0,
-                canvasHeight:0, 
+                canvasWidth: 0,
+                canvasHeight: 0,
             },
             methods: { // 点击菜单使用的函数
 
