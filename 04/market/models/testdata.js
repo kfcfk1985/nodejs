@@ -1,4 +1,4 @@
-const mongodb = require("./db");
+const mongodb = require("./db.js");    //可以不加.js
 
 mongodb.once("connect", async () => {
   const col = mongodb.col("fruits");
@@ -70,11 +70,11 @@ mongodb.once("connect", async () => {
       }
     ]);
     console.log("插入测试数据成功");
-    const ret = await col.find({
-      price: {
-        $gt: 10
+    const ret = await col.find({    //查找
+      price: {                      //价格      
+        $gt: 10                     //大于10的
       }
-    }).toArray()
+    }).toArray()                    //转换为数组  
     console.log('ret', ret)
 
   } catch (error) {
