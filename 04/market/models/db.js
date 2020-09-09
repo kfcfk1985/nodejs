@@ -12,6 +12,9 @@ class Mongodb {
     this.client = new MongoClient(conf.url, {     // 连接
       useNewUrlParser: true
     });
+
+    //注意：构造函数里面也可以运行代码，
+    //因为构造函数也是函数
     this.client.connect(err => {                
       if (err) throw err;
       console.log("连接成功");
