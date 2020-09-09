@@ -10,23 +10,28 @@ app.get("/", (req, res) => {
 
 app.get("/api/list", async (req, res) => {
   // 分页查询
-  const page = +req.query.page;
+  const page = +req.query.page;                 //做数据类型的转换,
+                                                //把字符串转换为数字类型
   try {
-
-    
     const col = mongo.col("fruits");
-
-
-
-
     const total = await col.find().count();
     const fruits = await col
-      .find()
-      .skip((page - 1) * 5)
-      .limit(5)
-      .toArray();
-    res.json({ ok: 1, data: { fruits, pagination: { total, page } } });
-    
+                        .find()               
+                        .skip((page - 1) * 5)   //跳过 对应页数前面的数据 
+                        .limit(5)               //每页的数目为5
+                        .toArray();
+
+        res.json({
+          ok: 1,
+          data: {
+            fruits,
+            pagination: {
+              total,
+              page
+            }
+          }
+        });
+
   } catch (error) {
     console.log(error);
   }
