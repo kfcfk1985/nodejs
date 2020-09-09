@@ -7,11 +7,13 @@ const MongoClient = require("mongodb").MongoClient;
 class Mongodb {
   constructor(conf) {
     // 保存conf
-    this.conf=conf;
+    this.conf = conf;
 
     this.emmiter = new EventEmitter();
     // 连接
-    this.client = new MongoClient(conf.url, { useNewUrlParser: true });
+    this.client = new MongoClient(conf.url, {
+      useNewUrlParser: true
+    });
     this.client.connect(err => {
       if (err) throw err;
       console.log("连接成功");
@@ -19,7 +21,7 @@ class Mongodb {
     });
   }
 
-  col(colName, dbName = conf.dbName) {
+  col(colName, dbName = conf.dbName) {    //在 dbName 数据库下 创建 colName 表
     return this.client.db(dbName).collection(colName);
   }
 
