@@ -4,11 +4,11 @@ mongodb.once("connect", async () => {
   const col = mongodb.col("fruits");
 
   try {
-    // 删除已存在
-    await col.deleteMany();
+    
+    await col.deleteMany();   // 删除已存在
 
-    // 插入
-    await col.insertMany([{
+   
+    await col.insertMany([{    // 插入
         name: "苹果",
         price: 5,
         category: "水果"

@@ -1,27 +1,25 @@
 const conf = require("./conf");
-const EventEmitter = require("events").EventEmitter;
+const EventEmitter = require("events").EventEmitter;    //用下面的也可以
+// const EventEmitter = require("events");             
 
 // 客户端
 const MongoClient = require("mongodb").MongoClient;
 
 class Mongodb {
   constructor(conf) {
-    // 保存conf
-    this.conf = conf;
-
+    this.conf = conf;                             // 保存conf
     this.emmiter = new EventEmitter();
-    // 连接
-    this.client = new MongoClient(conf.url, {
+    this.client = new MongoClient(conf.url, {     // 连接
       useNewUrlParser: true
     });
-    this.client.connect(err => {
+    this.client.connect(err => {                
       if (err) throw err;
       console.log("连接成功");
       this.emmiter.emit("connect");
     });
   }
 
-  col(colName, dbName = conf.dbName) {    //在 dbName 数据库下 创建 colName 表
+  col(colName, dbName = conf.dbName) { //在dbName数据库下创建/链接colName表
     return this.client.db(dbName).collection(colName);
   }
 
@@ -30,5 +28,4 @@ class Mongodb {
   }
 }
 
-// 2.导出db
-module.exports = new Mongodb(conf);
+module.exports = new Mongodb(conf);    // 2.导出db
