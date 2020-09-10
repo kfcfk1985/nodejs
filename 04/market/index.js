@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+const app = express();    //注意：这里不用 new 
 const path = require("path");
 const mongo = require("./models/db");
 const testdata = require("./models/testdata");  //引入这个是为了在数据库插入数据
@@ -8,8 +8,9 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve("./index.html"));
 });
 
-app.get("/api/list", async (req, res) => {
-  // 分页查询
+// 分页查询
+app.get("/api/list", async (req, res) => {  
+  console.log(`查询第${req.query.page}个页面`)  //对应前端get(`/api/list?page=xxx`)的形式
   const page = +req.query.page;                 //做数据类型的转换,
                                                 //把字符串转换为数字类型
   try {
