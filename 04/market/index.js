@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mongo = require("./models/db");
-const testdata = require("./models/testdata");
+const testdata = require("./models/testdata");  //引入这个是为了在数据库插入数据
 
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("./index.html"));

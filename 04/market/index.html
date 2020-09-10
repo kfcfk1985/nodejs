@@ -20,7 +20,11 @@
         {{ fruit.name }} - {{ fruit.price }}
       </li>
     </ul>
-    <el-pagination layout="prev, pager, next" @current-change="currentChange" :total="total"></el-pagination>
+    <el-pagination layout="prev, pager, next, jumper, ->, total" 
+                  :page-size="pageSize"
+                  @current-change="currentChange" 
+                  :total="total">
+    </el-pagination>
   </div>
   <script>
     var app = new Vue({
@@ -28,7 +32,8 @@
       data: {
         page: 1,
         total: 0,
-        fruits: []
+        fruits: [],
+        pageSize:5
       },
       created() {
         this.getData();
@@ -41,10 +46,11 @@
         getData() {
           axios
             .get(`/api/list?page=${this.page}`)
-            .then(res => res.data)
-            .then(({
-              data
-            }) => {
+            .then(res => {
+              console.log(res)
+              return res.data;
+            })
+            .then(({data}) => {
               this.fruits = data.fruits;
               this.total = data.pagination.total;
             });
