@@ -11,7 +11,7 @@ const schema = mongoose.Schema({
 schema.statics.getCart = function(_id) {
   return this.model("user")
     .findById(_id)
-    .exec();      //exec() 执行完后返回Promise,好像find函数才需要这个操作
+    .exec();      //exec() 执行完后返回Promise,好像find()函数才需要这个操作
 };
 
 // 根据id更新指定数据
