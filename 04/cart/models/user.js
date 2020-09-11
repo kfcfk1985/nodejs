@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema({
   name: String,
   password: String,
-  cart: []
+  cart: []  // 可以用 Array
 });
 
 // 根据id查询返回指定数据
@@ -13,13 +13,14 @@ schema.statics.getCart = function(_id) {
   return this.model("user")
     .findById(_id)
     .exec();      //exec() 执行完后返回Promise,好像findXXX()的函数都需要这个操作
+                  //2020-9-11实测，不用exec()也行的
 };
 
 // 根据id更新指定数据
 schema.statics.setCart = function(_id, cart) {
   return this.model("user")
     .findByIdAndUpdate(_id, { $set: { cart } })
-    .exec();
+    .exec();    //2020-9-11实测，不用exec()也行的
 };
 
 const model = mongoose.model("user", schema);
