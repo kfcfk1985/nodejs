@@ -8,10 +8,11 @@ const schema = mongoose.Schema({
 });
 
 // 根据id查询返回指定数据
+//schema.statics 方法相当于定义在 prototype上， schema.methods相当于定义在构造函数里（即私有）
 schema.statics.getCart = function(_id) {
   return this.model("user")
     .findById(_id)
-    .exec();      //exec() 执行完后返回Promise,好像find()函数才需要这个操作
+    .exec();      //exec() 执行完后返回Promise,好像findXXX()的函数都需要这个操作
 };
 
 // 根据id更新指定数据
