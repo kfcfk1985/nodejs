@@ -1,19 +1,21 @@
 //等待下一下事件队列
 (new Promise(resolve => {
-    console.Log('resolve')
+    console.log('resolve')
     resolve()
-})).then(() => console.Log('promise then...'))
+})).then(() => console.log('promise then...'))
 
+
+console.log("hello world")
 
 setImmediate(() => {
-    console.Log('set Immediate...')
+    console.log('set Immediate...')
 })
 // setTimeout， 放入Event Table中， 1秒后将回调函数放入宏任务的Event
 
 setTimeout(() => {
-    console.Log('setTimeout...')
+    console.log('setTimeout...')
 }, 0)
 
 process.nextTick(() => {
-    console.Log('next Tick...')
+    console.log('next Tick...')
 })
