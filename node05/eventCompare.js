@@ -19,3 +19,15 @@ setTimeout(() => {
 process.nextTick(() => {
     console.log('next Tick...')
 })
+
+
+//结果：
+//node的不同版本对于异步执行(process.nextTick 和 promise)的先后顺序在策略上会有不同，建议不要纠结，根据业务适度了解吧。
+/*
+resolve
+hello world
+next Tick...
+promise then...
+setTimeout...
+set Immediate...
+ */
