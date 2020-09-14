@@ -2,6 +2,7 @@
 
 const Koa = require("koa");
 const app = new Koa();
+const helpers = require("./utils/helpers");
 
 const hbs = require('koa-hbs')
 app.use(hbs.middleware({

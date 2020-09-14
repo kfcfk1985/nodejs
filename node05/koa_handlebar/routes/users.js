@@ -14,10 +14,12 @@ router.get("/", async ctx => {
     htmlStr:"<h1>hello world</h1>",
     users: [{
       username: "tom",
-      age: 20
+      age: 20,
+      birth: new Date(1999,2,3)
     }, {
       username: "jerry",
-      age: 20
+      age: 20,
+      birth: new Date(1999,3,3)
     }]
   });
 });
