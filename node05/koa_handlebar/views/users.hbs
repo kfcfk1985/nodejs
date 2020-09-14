@@ -18,7 +18,8 @@
 
 {{!-- 5.循环 --}}
 <ul>
-    {{#each users}}
+    {{#each users}}               
+                                {{!-- date 对应 helpers 中的 "data"，birth和 'YYYY/MM/DD' 相当于实参  --}}
     <li>{{username}} - {{age}}   {{date birth 'YYYY/MM/DD'}}</li>
     {{/each}}
 </ul>

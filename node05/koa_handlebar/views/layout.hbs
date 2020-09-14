@@ -7,8 +7,9 @@
 </head>
 
 <body>
-    <p>{{>nav}}</p>
-    <p>{{{body}}}</p>
+   
+    <p>{{>nav}}</p>    {{!-- 插入 /views/partials 目录下对应的 nav.hbs 组件  --}}
+    <p>{{{body}}}</p>  {{!-- 根据对应路由的 ctx.render('xxx'),在 /views/下寻找对应的 xxx.hbs  --}}
     
 </body>
 
