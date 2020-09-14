@@ -11,15 +11,24 @@
 
 {{!-- 4.条件语句 --}}
 {{#if isShow}}
-    <p>{{username}}，欢迎你！</p>
+<p>{{username}}，欢迎你！</p>
 {{else}}
-    <a href>请登录</a>
+<a href>请登录</a>
 {{/if}}
 
 {{!-- 5.循环 --}}
 <ul>
-    {{#each users}}               
-                                {{!-- date 对应 helpers 中的 "data"，birth和 'YYYY/MM/DD' 相当于实参  --}}
-    <li>{{username}} - {{age}}   {{date birth 'YYYY/MM/DD'}}</li>
+    {{#each users}}
+    {{!-- date 对应 helpers 中的 "data"，birth和 'YYYY/MM/DD' 相当于实参  --}}
+    <li>{{username}} - {{age}} {{date birth 'YYYY/MM/DD'}}</li>
     {{/each}}
 </ul>
+
+{{!-- 类似 vue 的 slot ,替换 layout.hbs 中的 #block 'jquery'  --}}
+{{#contentFor 'jquery'}}
+<script>
+    $(function () {
+        console.log('content for jQuery')
+    })
+</script>
+{{/contentFor}}
