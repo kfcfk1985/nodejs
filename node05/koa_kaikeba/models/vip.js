@@ -6,7 +6,8 @@ const schema = mongoose.Schema({
   poster: String,
   icon: String,
   description: String,
-  cooperation: [String]
+  cooperation: [String],
+  sort:Number
 });
 
 const model = mongoose.model("vip", schema);
@@ -24,7 +25,8 @@ async function testdata() {
       cooperation: [
         "https://img.kaikeba.com/baidu.png",
         "https://img.kaikeba.com/toutiao.png"
-      ]
+      ],
+      sort:2
     },
     {
       name: "Python爬虫商业项目班",
@@ -35,7 +37,8 @@ async function testdata() {
       cooperation: [
         "https://img.kaikeba.com/baidu.png",
         "https://img.kaikeba.com/toutiao.png"
-      ]
+      ],
+      sort:1
     },
     {
       name: "百万年薪架构师",
