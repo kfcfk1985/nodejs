@@ -8,7 +8,13 @@ const schema = mongoose.Schema({
 });
 
 // 根据id查询返回指定数据
-//schema.statics 方法相当于定义在 prototype上， schema.methods相当于定义在构造函数里（即私有）
+//schema.statics 方法相当于定义在 model 的 prototype上， schema.methods 相当于定义在model的构造函数里（即私有）
+//例子:
+// schema.statics.aaa = function(){}
+// schema.methods.bbb = function(){}
+// const model = mongoose.model("user", schema)
+// model.aaa()  可以正常调用
+// model.bbb()   不能正常调用，必须 model 的实例才可以调用 bbb（） 
 schema.statics.getCart = function(_id) {
   return this.model("user")
     .findById(_id)
