@@ -9,13 +9,13 @@ const redisClient = redis.createClient(6379, 'localhost')
 const wrapper = require('co-redis')
 const client = wrapper(redisClient)
 
-app.keys = ['some secret']
+app.keys = ['some secret']          //用于session 加密，可以放一个随机的字符串
 
 const SESS_CONFIG = {
-    key: 'kkb:sess', // 名
-    // maxAge: 8640000, // 有效期
-    // httpOnly: true, // 服务器有效
-    // signed: true // 签名
+    key: 'kkb:sess',                // 用于session的key名，随便的，自己想设置啥就写啥
+    maxAge: 8640000,                // 有效期 ,8640000 就是一天
+    httpOnly: true,                 // 仅服务器有效（即：不能通过JS读取）
+    signed: true,                   // 签名
     store: redisStore({ client })
 }
 
