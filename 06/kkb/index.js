@@ -1,5 +1,7 @@
 const Koa = require("koa");
 const app = new Koa();
+
+/*链接mongoDB数据库，获取vip课程数据 */
 const mongoose = require('./models/mongoose')
 const getVip = require('./middleware/get-vip')
 

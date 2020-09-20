@@ -1,5 +1,7 @@
 const Router = require("koa-router");
-const router = new Router({ prefix: '/users' });
+const router = new Router({
+  prefix: '/users'
+});
 router.get("/", async ctx => {
   console.log('user')
   // ctx.body = "users list";
@@ -9,15 +11,24 @@ router.get("/", async ctx => {
     isShow: true,
     username: "jerry",
     htmlStr: `<h3>abc</h3>`,
-    users: [
-      { username: "tom", age: 20, birth: new Date(1999, 2, 2) },
-      { username: "jerry", age: 20, birth: new Date(1999, 3, 2) }
+    users: [{
+        username: "tom",
+        age: 20,
+        birth: new Date(1999, 2, 2)
+      },
+      {
+        username: "jerry",
+        age: 20,
+        birth: new Date(1999, 3, 2)
+      }
     ]
   });
 });
 
 router.post('/login', async ctx => {
-  const { body } = ctx.request
+  const {
+    body
+  } = ctx.request
   console.log('body', body)
   // 登录逻辑
 
@@ -37,20 +48,33 @@ router.post('/logout', async ctx => {
   }
 })
 
-router.get('/getUser', require('../middleware/auth'), async ctx => {
-  ctx.body = {
-    ok: 1,
-    message: '获取成功',
-    userinfo: ctx.session.userinfo
-  }
-})
+
+router.get('/getUser',
+  require('../middleware/auth'),  //这个中间件的作用:客户端调用这个接口时，看看是否有权限。
+  async ctx => {
+    ctx.body = {
+      ok: 1,
+      message: '获取成功',
+      userinfo: ctx.session.userinfo
+    }
+  })
+
+// router.get('/getUser',async ctx => {
+//   ctx.body = {
+//     ok: 1,
+//     message: '获取成功',
+//     userinfo: ctx.session.userinfo
+//   }
+// })
 
 const jwt = require('jsonwebtoken')
 const jwtAuth = require('koa-jwt')
 const secret = 'it is a'
 
 router.post('/login-token', async ctx => {
-  const { body } = ctx.request
+  const {
+    body
+  } = ctx.request
   console.log('body:', body)
 
   //  数据库验证
@@ -65,7 +89,9 @@ router.post('/login-token', async ctx => {
   }
 })
 
-router.get('/getUser-token', jwtAuth({ secret }), async ctx => {
+router.get('/getUser-token', jwtAuth({
+  secret
+}), async ctx => {
   console.log('state: ', ctx.state.user)
   ctx.body = {
     message: '获取数据成功',
