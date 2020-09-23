@@ -71,7 +71,7 @@ router.get('/getUser',
 const jwt = require('jsonwebtoken')   //用来生成token 的库
 const jwtAuth = require('koa-jwt')    //用来进行token鉴权的中间件,主要的作用：
                                       //    1.它会验证token是否正确
-                                      //    2.会把转换后的属性和值放到 ctx.state 中。（ctx.state主要用于中间件之间传值）
+                                      //    2.会把转换后的属性和值放到 ctx.state.user 中。（ctx.state主要用于中间件之间传值）
 const secret = 'it is a'
 
 router.post('/login-token', async ctx => {
@@ -95,7 +95,7 @@ router.post('/login-token', async ctx => {
 router.get('/getUser-token', jwtAuth({
   secret
 }), async ctx => {
-  console.log('state: ', ctx.state.user)
+  console.log('state: ', ctx.state)
   ctx.body = {
     message: '获取数据成功',
     userinfo: ctx.state.user.data
