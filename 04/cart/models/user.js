@@ -7,25 +7,23 @@ const schema = mongoose.Schema({
   cart: []  // 可以用 Array
 });
 
-// 根据id查询返回指定数据
-//schema.statics 方法相当于定义在 model 的 prototype上， schema.methods 相当于定义在model的构造函数里（即私有）
-//例子:
-// schema.statics.aaa = function(){}
-// schema.methods.bbb = function(){}
-// const model = mongoose.model("user", schema)
-// model.aaa()  可以正常调用
-// model.bbb()   不能正常调用，必须 model 的实例才可以调用 bbb（） 
+// 根据id查询返回指定数据            
+//schema.statics 方法相当于定义在 model 上（静态方法）， schema.methods 相当于定义在model的构 prototype 中            
+//例子:            
+// schema.statics.aaa = function(){}            
+// schema.methods.bbb = function(){}            
+// const model = mongoose.model(\"user\", schema)            
+// model.aaa()  可以正常调用            
+// model.bbb()   不能正常调用，必须 model 的实例才可以调用 bbb（）    
 schema.statics.getCart = function(_id) {
-  return this.model("user")
-    .findById(_id)
+  return this.findById(_id)
     .exec();      //exec() 执行完后返回Promise,好像findXXX()的函数都需要这个操作
                   //2020-9-11实测，不用exec()也行的
 };
 
 // 根据id更新指定数据
 schema.statics.setCart = function(_id, cart) {
-  return this.model("user")
-    .findByIdAndUpdate(_id, { $set: { cart } })
+  return this.findByIdAndUpdate(_id, { $set: { cart } })
     .exec();    //2020-9-11实测，不用exec()也行的
 };
 
