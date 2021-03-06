@@ -12,7 +12,7 @@ const SESS_CONFIG = {
     signed: true,                   // 签名，若为true，则保存在客户端中的cookie既有session(名字取决于key参数，若key为：koa.session)，又有签名(名字为：koa.session.sig)。
                                     //详细见《koa-session配置中signed参数的作用.xmind》                              
 
-    //store: redisStore({ client }),  //若屏蔽这个，ctx.session 的数据保存在内存中，指向的对象越多属性，生成的cookie就越大
+    //store: redisStore({ client }),  //若屏蔽这个，ctx.session 的数据保存在cookie中（koa.session的内容就是数据转后的结果），指向的对象越多属性，生成的cookie就越大
                                       //若开启，ctx.session的数据保存在redis中，koa.session的内容由redis生成。
 
     secure: false,                  //不能设为true，否则http请求出错
