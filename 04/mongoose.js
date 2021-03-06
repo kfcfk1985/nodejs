@@ -14,7 +14,8 @@ conn.once("open", async () => {
     // 2.定义一个Schema - Table
     const Schema = mongoose.Schema({
         category: String,
-        name: String
+        name: String,
+        price:Number 
     });
 
     // 3.编译一个Model, 它对应数据库中复数、小写的Collection
